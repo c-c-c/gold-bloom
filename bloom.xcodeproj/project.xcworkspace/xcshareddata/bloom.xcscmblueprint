@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5FDB5CAB2542DA1164F8E7577FF64036D548D9A1",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "CB3632232065C94D3A2658B3916436BE993B7729" : 0,
+    "5FDB5CAB2542DA1164F8E7577FF64036D548D9A1" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5EE4C63A-D42B-49AB-B3D5-DE1F75FBFE21",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "CB3632232065C94D3A2658B3916436BE993B7729" : "",
+    "5FDB5CAB2542DA1164F8E7577FF64036D548D9A1" : "bloom\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "bloom",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "bloom.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/c-c-c\/gold-bloom.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5FDB5CAB2542DA1164F8E7577FF64036D548D9A1"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/c-c-c\/gold-creative-coding-2.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CB3632232065C94D3A2658B3916436BE993B7729"
+    }
+  ]
+}
