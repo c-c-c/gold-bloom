@@ -4,8 +4,6 @@
 
 ‘Bloom’ is an art installation celebrating Spring, which is visually represented through a graphic abstraction of cherry blossom flowers and tree branches.
 
-![Alt text](relative/path/to/img.jpg?raw=true "Title")
-
 ![Bloom](bin/data/screenshot.png)
 
 ## Getting Started
@@ -58,7 +56,7 @@ Xcode: Open the Xcode project file, select the Debug scheme, and hit "Run".
 * **Celine Chappert** - *Design & Code* - [Personal Website](https://www.celinechappert.com)
 
 
-## Acknowledgments http://instagram.com/kiyoshinakauchi
+## Acknowledgments 
 
 * inspired by a code sketch published by Kiyoshinakauchi - [Instagram](http://instagram.com/kiyoshinakauchi)
 
