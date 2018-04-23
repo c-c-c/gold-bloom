@@ -1,9 +1,12 @@
 # gold-bloom
 
-# Sakura Bloom
+# Bloom
 
 ‘Bloom’ is an art installation celebrating Spring, which is visually represented through a graphic abstraction of cherry blossom flowers and tree branches.
 
+![Alt text](relative/path/to/img.jpg?raw=true "Title")
+
+![Bloom](bin/data/screenshot.png)
 
 ## Getting Started
 
@@ -40,7 +43,7 @@ And make sure the .h and .cpp files are correctly linked in your core files.
 
 ### OSX
 
-Xcode: Open the Xcode project file, select the "leapMotionExample Debug" scheme, and hit "Run".
+Xcode: Open the Xcode project file, select the Debug scheme, and hit "Run".
 
 ## Built With
 
@@ -55,8 +58,8 @@ Xcode: Open the Xcode project file, select the "leapMotionExample Debug" scheme,
 * **Celine Chappert** - *Design & Code* - [Personal Website](https://www.celinechappert.com)
 
 
-## Acknowledgments
+## Acknowledgments http://instagram.com/kiyoshinakauchi
 
-* Hat tip to anyone who's code was used
+* inspired by a code sketch published by Kiyoshinakauchi - [Instagram](http://instagram.com/kiyoshinakauchi)
 
 
