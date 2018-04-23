@@ -1,6 +1,26 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
+//
+//  BLOOM created by Celine Chappert
+//
+//  Godsmiths, Creative Computing Semester 2, 2018
+//
+//  Masters Maths+Computing, 'Computational Arts'
+//
+//  All code my own, unless otherwise noted.
+//
+//  Sakura flowers inspired by a code sketch published on
+//  instagram by Kiyoshinakauchi. Link in readme
+//
+//  Leap integration done with the help of ofxLeapMotion2,
+//  a wrapper for the Leap Motion SDK.
+//
+//
+//--------------------------------------------------------------
+
+
+//--------------------------------------------------------------
 
 
 void ofApp::setup(){
@@ -22,9 +42,12 @@ void ofApp::setup(){
 	leap.open();
     
     // keep app receiving data from leap motion even when it's in the background
+    
     leap.setReceiveBackgroundFrames(true);
     
 	cam.setOrientation(ofPoint(-20, 0, 0));
+    
+    // 3d
     
 	glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
@@ -34,7 +57,10 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 	fingersFound.clear();
-	
+    
+    
+	// getSimpleHands() is a vector function written in the addon code
+    // found in the addon's .h file
 
     handTracking = leap.getSimpleHands();
     
@@ -133,7 +159,10 @@ void ofApp::draw(){
         // x% of the time
         
         if (ofRandom(100) < 10) {
+            
         
+        // forloop formula, although tweaked,
+        // originally found in Kiyoshinakauchi's code sketch.
         
         for (int f = 0; f < pt.length() * 0.5; f+=5) {
             
@@ -185,13 +214,15 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     
     // clear
+    
     if (key == ' ') {
         
         ofBackground(178,34,34);
         line.clear();
     }
     
-    // save JPG
+    // save screenshot in bin/data
+    
     if (key == 's') {
         ofImage screenshot;
         screenshot.grabScreen(0,0,700,700);
@@ -203,6 +234,8 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-    // let's close down Leap and kill the controller
+    
+    // close down Leap and kill the controller
+    
     leap.close();
 }
