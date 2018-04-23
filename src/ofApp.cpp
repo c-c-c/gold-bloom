@@ -1,69 +1,208 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup() {
+
+
+void ofApp::setup(){
     
-    ofSetFrameRate(60);
-    ofSetWindowTitle("Insta");
-    
-    ofNoFill();
     ofSetBackgroundAuto(false);
+    
+    ofSetWindowTitle("Bloom");
+    ofSetFrameRate(60);
+    
+    ofColor red(178,34,34);
+    ofColor blue(56,78,80);
+    
+    ofBackground(red);
+    
+
+    ofSetVerticalSync(true);
+	ofSetLogLevel(OF_LOG_VERBOSE);
+    
+	leap.open();
+    
+    // keep app receiving data from leap motion even when it's in the background
+    leap.setReceiveBackgroundFrames(true);
+    
+	cam.setOrientation(ofPoint(-20, 0, 0));
+    
+	glEnable(GL_DEPTH_TEST);
+    glEnable(GL_NORMALIZE);
 }
 
-//--------------------------------------------------------------
-void ofApp::update() {
-    
-}
 
 //--------------------------------------------------------------
-void ofApp::draw() {
+void ofApp::update(){
+	fingersFound.clear();
+	
+
+    handTracking = leap.getSimpleHands();
     
-    if (ofGetMousePressed() == false) {
+    if(leap.isFrameNew() && handTracking.size() ){
         
-        return;
+        // leap settings config
+        
+        leap.setMappingX(-230, 230, -ofGetWidth()/2, ofGetWidth()/2);
+		leap.setMappingY(90, 490, -ofGetHeight()/2, ofGetHeight()/2);
+        leap.setMappingZ(-150, 150, -200, 200);
+        
+        fingerType fingerTypes[] = {THUMB, INDEX, MIDDLE, RING, PINKY};
+        
+        for(int i = 0; i < handTracking.size(); i++){
+            for (int f=0; f<5; f++) {
+                int id = handTracking[i].fingers[ fingerTypes[f] ].id;
+                ofPoint mcp = handTracking[i].fingers[ fingerTypes[f] ].mcp; // metacarpal
+                ofPoint pip = handTracking[i].fingers[ fingerTypes[f] ].pip; // proximal
+                ofPoint dip = handTracking[i].fingers[ fingerTypes[f] ].dip; // distal
+                ofPoint tip = handTracking[i].fingers[ fingerTypes[f] ].tip; // fingertip
+                fingersFound.push_back(id);
+            }
+        }
     }
     
-    ofPoint mouse = ofPoint(ofGetMouseX(), ofGetMouseY());
-    ofPoint prev_mouse = ofPoint(ofGetPreviousMouseX(), ofGetPreviousMouseY());
     
-    ofSetColor(39);
-    ofSetLineWidth(10);
-    ofDrawLine(mouse, prev_mouse);
     
-    if (ofRandom(100) < 50) {
+
+    
+	// tell ofxLeapMotion that the frame is no longer new.
+	leap.markFrameAsOld();
+}
+
+//--------------------------------------------------------------
+void ofApp::draw(){
+    
+    
+    //--------------------------------------------------------------
+    //
+    //  GRID
+    //
+    //--------------------------------------------------------------
+
+	ofSetColor(255);
+	ofDrawBitmapString("Sakura Bloom with ofxLeapMotion \nLeap Connected? " + ofToString(leap.isConnected()), 20, 20);
+
+    ofDrawBitmapString("Frame " + ofToString(ofGetFrameNum() ), 20, 50);
+
+	cam.begin();
+    
+    // orientation, 3d landscape
+    
+	ofPushMatrix();
+    ofRotate(90, 0, 0, 1);
+    
+    ofSetColor(255,50);
+    ofDrawGridPlane(800, 20, false);
+	ofPopMatrix();
+    
+    //--------------------------------------------------------------
+    //
+    //  HAND, TRACKING & TREE
+    //
+    //--------------------------------------------------------------
+    
+    //    fingerType fingerTypes[] = {THUMB, INDEX, MIDDLE, RING, PINKY};
+    
+    for(int i = 0; i < handTracking.size(); i++){
         
-        ofPoint target = mouse - prev_mouse;
-        target *= 10;
+        // SDK variables (may be useful for more specific finger gestures)
         
-        ofPushMatrix();
-        ofTranslate(mouse);
+        //        bool isLeft        = simpleHands[i].isLeft;
+        //        ofPoint handNormal = simpleHands[i].handNormal;
+        
+        
+        //--------------------------------------------------------------
+        // tracking
+        
+        ofPoint handPos    = handTracking[i].handPos;
+        
+
+        //--------------------------------------------------------------
+        // branch
         
         ofSetColor(39);
-        ofSetLineWidth(5);
-        ofDrawLine(ofPoint(0, 0), target);
+        ofSetLineWidth(ofRandom(9,19));
+        line.draw();
         
-        ofSetColor(255, 239, 239);
-        for (int f = 0; f < target.length() * 0.5; f++) {
+        // save all the hand tracking positions into points and
+        // push those points into ofPolyline class to connect them.
+        
+        ofPoint pt;
+        pt.set(handPos.x, handPos.y);
+        line.addVertex(pt);
+        
+        // x% of the time
+        
+        if (ofRandom(100) < 10) {
+        
+        
+        for (int f = 0; f < pt.length() * 0.5; f+=5) {
             
-            ofDrawCircle(target * ofRandom(1) + ofPoint(ofRandom(-30, 30), ofRandom(-30, 30)), 3);
+            //--------------------------------------------------------------
+            // cherry blossoms
+            
+            ofSetColor(255, 239, 239, ofRandom(255));
+            ofDrawCircle(handPos.x + ofRandom(-30,30), handPos.y + ofRandom(-30,30), ofRandom(0.5, 4.5));
+            
+            }
         }
         
-        ofPopMatrix();
-    }
-}
 
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key) {
-    
-    if (key == 'c') {
         
-        ofBackground(0);
+        //--------------------------------------------------------------
+        // fingers
+        
+//        ofSetColor(255, 255, 0);
+//        ofDrawArrow(handPos, handPos + 100*handNormal);
+//        
+//        for (int f=0; f<5; f++) {
+//            ofPoint mcp = simpleHands[i].fingers[ fingerTypes[f] ].mcp;  // metacarpal
+//            ofPoint pip = simpleHands[i].fingers[ fingerTypes[f] ].pip;  // proximal
+//            ofPoint dip = simpleHands[i].fingers[ fingerTypes[f] ].dip;  // distal
+//            ofPoint tip = simpleHands[i].fingers[ fingerTypes[f] ].tip;  // fingertip
+//            
+//            ofSetColor(255,255,0);
+//            
+//            ofDrawSphere(mcp.x, mcp.y, mcp.z, 12);
+//            ofDrawSphere(pip.x, pip.y, pip.z, 12);
+//            ofDrawSphere(dip.x, dip.y, dip.z, 12);
+//            ofDrawSphere(tip.x, tip.y, tip.z, 12);
+//            
+//            ofSetColor(255);
+//            ofSetLineWidth(10);
+//            ofDrawLine(mcp.x, mcp.y, mcp.z, pip.x, pip.y, pip.z);
+//            ofDrawLine(pip.x, pip.y, pip.z, dip.x, dip.y, dip.z);
+//            ofDrawLine(dip.x, dip.y, dip.z, tip.x, tip.y, tip.z);
+//        }
     }
+    
+
+
+    
+	cam.end();
 }
 
 //--------------------------------------------------------------
-//int main() {
-//    
-//    ofSetupOpenGL(720, 720, OF_WINDOW);
-//    ofRunApp(new ofApp());
-//}
+void ofApp::keyPressed(int key){
+    
+    // clear
+    if (key == ' ') {
+        
+        ofBackground(178,34,34);
+        line.clear();
+    }
+    
+    // save JPG
+    if (key == 's') {
+        ofImage screenshot;
+        screenshot.grabScreen(0,0,700,700);
+        screenshot.save("save"+ofGetTimestampString()+".png");
+    }
+
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::exit(){
+    // let's close down Leap and kill the controller
+    leap.close();
+}

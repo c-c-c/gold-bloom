@@ -58,6 +58,5 @@ Xcode: Open the Xcode project file, select the "leapMotionExample Debug" scheme,
 ## Acknowledgments
 
 * Hat tip to anyone who's code was used
-* Inspiration
-* etc
+
 
