@@ -117,7 +117,7 @@ void ofApp::draw(){
     ofRotate(90, 0, 0, 1);
     
     ofSetColor(255,50);
-    ofDrawGridPlane(800, 20, false);
+//    ofDrawGridPlane(800, 20, false);
 	ofPopMatrix();
     
     //--------------------------------------------------------------
